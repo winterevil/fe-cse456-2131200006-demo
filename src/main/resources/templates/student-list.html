@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<h1>Student List</h1>
+<div th:if="${message}" style="font-weight: bold;">
+    <p th:text="${message}"></p>
+</div>
+<form th:action="@{/students}" method="get">
+    <input type="text" name="keyword" th:value="${keyword}" placeholder="Search by name ...">
+    <button type="submit">Search</button>
+</form>
+<a th:href="@{/student/new}">Add New</a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Year of Birth</th>
+        <th>GPA</th>
+        <th>Major</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="s : ${studentList}">
+        <td th:text="${s.id}"></td>
+        <td th:text="${s.name}"></td>
+        <td th:text="${s.yob}"></td>
+        <td th:text="${s.gpa}"></td>
+        <td th:text="${s.major.name}"></td>
+        <td>
+            <a th:href="@{'/student/edit/' + ${s.id}}">Edit</a>
+            <a th:href="@{'/student/delete/' + ${s.id}}"
+               onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

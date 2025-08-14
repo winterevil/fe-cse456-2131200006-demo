@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${formMode == 'edit'} ? 'Edit Student' : 'Add New Student'"></title>
+</head>
+<body>
+<h1 th:if="${formMode == 'edit'}">Edit Student Info</h1>
+<h1 th:if="${formMode == 'add'}">Add New Student Info</h1>
+<form action="/student/form" th:object="${student}" method="post">
+    <p>
+        <label for="id">ID</label>
+<!--        th:field tương đương với name + value. Khi này thymeleaf sẽ tự động đặt name-->
+        <input type="text" id="id" th:field="*{id}" th:readonly="${formMode == 'edit'}"
+        th:style="${formMode == 'edit' ? 'color : grey' : 'color: black'}">
+        <span th:errors="*{id}" style="color: red"></span>
+        <span th:if="${duplicateId != null}" th:text="${duplicateId}" style="color: red"></span>
+    </p>
+    <p>
+        <label for="name">Name</label>
+        <input type="text" id="name" th:field="*{name}">
+        <span th:errors="*{name}" style="color: red"></span>
+    </p>
+    <p>
+        <label for="yob">Year of Birth</label>
+        <input type="text" id="yob" th:field="*{yob}">
+        <span th:errors="*{yob}" style="color: red"></span>
+    </p>
+    <p>
+        <label for="gpa">Gpa</label>
+        <input type="text" id="gpa" th:field="*{gpa}">
+        <span th:errors="*{gpa}" style="color: red"></span>
+    </p>
+    <p>
+        <label for="major">Major</label>
+        <select id="major" th:field="*{major.id}">
+            <option th:each="m : ${majorList}" th:value="${m.id}" th:text="${m.name}"
+            th:selected="${student.major.id==m.id}"></option>
+        </select>
+    </p>
+    <button type="submit">Save</button>
+    <!--    Lưu lại trạng thái edit hay add để khi bắt validate gọi lại form thì có formMode
+    nếu không sẽ bị lôi NPE-->
+    <input type="hidden" name="formMode" th:value="${formMode}">
+</form>
+</body>
+</html>

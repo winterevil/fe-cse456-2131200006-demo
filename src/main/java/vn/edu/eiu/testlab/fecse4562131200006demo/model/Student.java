@@ -1,0 +1,50 @@
+package vn.edu.eiu.testlab.fecse4562131200006demo.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "tbl_Student")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Student {
+    @Id
+    @Column(name = "ID", columnDefinition = "CHAR(5)")
+    @Size(min=5, max=5, message="Length of ID must be exactly 5 characters")
+    @NotBlank(message = "ID must not be left blank")
+    private String id;
+
+    @Column(name = "Name", columnDefinition = "NVARCHAR(100)", nullable = false)
+    @NotNull(message = "Name must not be null")
+    @Size(min=5, max=100, message="Length of name must be between 5 and 100")
+    @Pattern(regexp="^(\\p{Lu}\\p{Ll}+)(\\s\\p{Lu}\\p{Ll}+)*$",
+            message="Each word must start with an uppercase letter")
+    private String name;
+
+    @Column(name = "Year of Birth", nullable = false)
+    @Min(value = 2000, message = "Yob must be from 2000")
+    @Max(value = 2007,message = "Yob must be to 2007")
+    @NotNull(message = "Yob must not be null")
+    private int yob;
+
+    @Column(name = "Gpa", nullable = false)
+    @Min(value = 0, message = "Gpa must be greater than or equal 0")
+    @Max(value = 100, message = "Gpa must be less than or equal 100")
+    private double gpa;
+
+    @ManyToOne
+    @JoinColumn(name = "majorID") //Để báo là tui muốn đặt tên cột khóa ngoại
+    private Major major; //Cái này sẽ gắn vào mappedBy bên Major
+
+    //Bổ sung thêm constructor không có major, vì lúc thêm mới sv chưa có thông tin major
+    public Student(String id, String name, int yob, double gpa) {
+        this.id = id;
+        this.name = name;
+        this.yob = yob;
+        this.gpa = gpa;
+    }
+}
