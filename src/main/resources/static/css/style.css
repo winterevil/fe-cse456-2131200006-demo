@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;                /* Đặt kiểu chữ (font) cho toàn bộ trang web là Arial, nếu không có thì dùng sans-serif. */
+    font-size: 18px;                               /* Đặt kích thước chữ mặc định cho toàn bộ trang là 18 pixel. */
+    background-color: #f4f5f2;                         /* Đặt màu nền của trang web (background) là màu đỏ. */
+    color: #445f3b;                                 /* Đặt màu chữ mặc định cho toàn bộ trang là màu vàng. */
+}
+body.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;                /* Đặt kiểu chữ (font) cho toàn bộ trang web là Arial, nếu không có thì dùng sans-serif. */
+    font-size: 18px;                               /* Đặt kích thước chữ mặc định cho toàn bộ trang là 18 pixel. */
+    background-color: #f4f5f2;                         /* Đặt màu nền của trang web (background) là màu đỏ. */
+    color: #445f3b;                                 /* Đặt màu chữ mặc định cho toàn bộ trang là màu vàng. */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2d4d2d;                              /* Đặt màu chữ cho các thẻ tiêu đề là màu đen. */
+}
+
+/* Các kiểu cơ bản để các phần tử form và liên kết hiển thị rõ ràng */
+input, select {
+    font-family: Arial, sans-serif;                /* Đặt kiểu chữ cho tất cả các ô nhập liệu (input) và hộp chọn (select) là Arial, nếu không có thì dùng sans-serif. */
+    font-size: 18px;                               /* Đặt kích thước chữ bên trong ô nhập liệu và hộp chọn là 18 pixel. */
+    color: #445f3b;                                  /* Đặt màu chữ bên trong ô nhập liệu và hộp chọn là màu đen để dễ đọc. */
+    background-color: white;                       /* Đặt màu nền của ô nhập liệu và hộp chọn là màu trắng. */
+    border: 1px solid #445f3b;                       /* Đặt đường viền (border) cho ô nhập liệu và hộp chọn: độ dày 1 pixel, kiểu liền nét (solid), màu đen. */
+    padding: 5px;                                  /* Đặt khoảng đệm (padding) 5 pixel bên trong ô nhập liệu/hộp chọn, giữa nội dung và đường viền. */
+    margin-bottom: 10px;                           /* Đặt khoảng lề dưới (margin-bottom) 10 pixel cho mỗi ô nhập liệu/hộp chọn. */
+}
+
+button {
+    font-family: Arial, sans-serif;                /* Đặt kiểu chữ cho tất cả các nút bấm (button) là Arial, nếu không có thì dùng sans-serif. */
+    font-size: 18px;                               /* Đặt kích thước chữ trên nút bấm là 18 pixel. */
+    color: #f8f9f7;                                  /* Đặt màu chữ trên nút bấm là màu trắng sữa. */
+    background-color: #445f3b;                  /* Đặt màu nền cho nút bấm là màu xanh lá cây đậm. */
+    border: 1px solid #e0efea;                       /* Đặt đường viền cho nút bấm: độ dày 1 pixel, kiểu liền nét, màu đen. */
+    padding: 5px 10px;                             /* Đặt khoảng đệm cho nút bấm: 5px trên dưới, 10px trái phải. */
+    margin-bottom: 10px;                           /* Đặt khoảng lề dưới 10 pixel cho mỗi nút bấm. */
+    cursor: pointer;                               /* Thay đổi con trỏ chuột thành hình bàn tay khi di chuột qua nút (cho biết có thể click được). */
+}
+
+button:hover {
+    opacity: 0.8;                                  /* Khi di chuột qua nút (hover), làm mờ nút đi 20% (độ mờ 0.8), tạo hiệu ứng tương tác. */
+}
+
+a,.username {
+    color: #564734;                              /* Đặt màu chữ cho tất cả các liên kết (a - anchor) là màu nâu đậm. */
+    text-decoration: underline;                    /* Đặt gạch chân (underline) cho các liên kết. */
+}
+
+.welcome{
+    margin-left: auto;
+    margin-right: 0;
+    width: fit-content;
+    padding-right: 20px;
+}
+
+table {
+    width: 100%;                                   /* Đặt chiều rộng của bảng (table) là 100% của phần tử cha chứa nó. */
+    border-collapse: collapse;                     /* Gộp các đường viền của ô bảng lại thành một đường duy nhất, thay vì tách rời. */
+    margin-top: 20px;                              /* Đặt khoảng lề trên (margin-top) 20 pixel cho bảng. */
+}
+
+th, td {
+    border: 1px solid white;                      /* Đặt đường viền cho tiêu đề cột (th) và ô dữ liệu (td): dày 1px, liền nét, màu vàng. */
+    padding: 8px;                                  /* Đặt khoảng đệm 8 pixel bên trong tiêu đề và ô bảng. */
+    text-align: left;                              /* Căn chỉnh văn bản bên trong tiêu đề và ô bảng sang bên trái. */
+}
+
+/* Các kiểu mới cho việc căn chỉnh nhãn và ô nhập liệu */
+.form-group {
+    display: flex;                                 /* Biến phần tử có class 'form-group' thành một flex container. Các phần tử con (nhãn, ô nhập) sẽ được xếp trên một hàng và căn chỉnh linh hoạt. */
+    align-items: center;                           /* Căn chỉnh các phần tử con theo chiều dọc (trên/dưới) vào chính giữa của 'form-group'. */
+    margin-bottom: 10px;                           /* Thêm khoảng cách 10 pixel ở phía dưới mỗi nhóm form (nhãn + ô nhập liệu). */
+}
+
+.form-group label {
+    flex-basis: 120px;                             /* Đặt chiều rộng cơ sở (initial size) cho nhãn là 120 pixel. Điều này giúp các nhãn có chiều rộng bằng nhau và các ô nhập liệu thẳng hàng. */
+    text-align: right;                             /* Căn chỉnh văn bản trong nhãn sang bên phải, đẩy nó sát vào ô nhập liệu. */
+    padding-right: 10px;                           /* Thêm khoảng đệm 10 pixel ở bên phải của nhãn, tạo một khoảng trống nhỏ giữa nhãn và ô nhập liệu. */
+}
+
+.form-group input,
+.form-group select {
+    max-width: 300px;                              /* Đặt chiều rộng tối đa cho ô nhập liệu và hộp chọn là 300 pixel, ngăn chúng quá lớn. */
+}
+.login-container{
+    background: #fff;               /* Nền trắng cho form */
+    padding: 30px 40px;
+    border-radius: 10px;            /* Bo góc mềm mại */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Đổ bóng nổi bật */
+    width: 450px;                   /* Độ rộng hợp lý */
+}
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2d4d2d;                 /* Màu xanh đậm */
+}
+.login-container.form-group form {
+    width: 100%;
+    justify-content: center;
+}
+
+.login-container button {
+    margin: 20px auto 0;
+}
+
