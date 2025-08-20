@@ -67,3 +67,8 @@ body {
 .form-group button:hover {
     opacity: 0.9;
 }
+
+.err-login {
+    color: red;
+    font-style: italic;
+}

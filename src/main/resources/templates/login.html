@@ -8,10 +8,12 @@
 <body>
     <div class="form-container">
         <h1>Login</h1>
+        <span class="err-login" th:if="${errLogin}" th:text="${errLogin}"></span>
         <form th:action="@{'/auth'}" method="post" th:object="${user}">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id=username placeholder="Enter Username" name="username" required>
+                <input type="text" id=username placeholder="Enter Username" name="username" required
+                th:value="${username == null ? '' : username}">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>

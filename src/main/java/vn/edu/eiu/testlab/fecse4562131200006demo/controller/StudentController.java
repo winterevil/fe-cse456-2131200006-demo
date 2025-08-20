@@ -1,13 +1,16 @@
 package vn.edu.eiu.testlab.fecse4562131200006demo.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.eiu.testlab.fecse4562131200006demo.model.Major;
 import vn.edu.eiu.testlab.fecse4562131200006demo.model.Student;
+import vn.edu.eiu.testlab.fecse4562131200006demo.model.User;
 import vn.edu.eiu.testlab.fecse4562131200006demo.service.MajorService;
 import vn.edu.eiu.testlab.fecse4562131200006demo.service.StudentService;
 
@@ -29,13 +32,20 @@ public class StudentController {
     /*
      * link này có 2 cách request:
      * 1. Gõ trực tiếp
-     *   - Khi gõ trực tiếp link /students nếu hàm xử lý có @RequestParam thì sẽ bị lỗi Null (NPE), nên phải xử lý bằng 1 trong 2 cách: gán default value cho @RequestParam hoặc thêm thuộc tính required = false
+     *   - Khi gõ trực tiếp link /students nếu hàm xử lý có @RequestParam thì sẽ bị lỗi Null (NPE), nên
+     * phải xử lý bằng 1 trong 2 cách: gán default value cho @RequestParam hoặc thêm thuộc tính required = false
      * 2. Thông qua nút bấm search*/
     @GetMapping("students")
-    public String students(@RequestParam(value = "keyword", defaultValue = "") String keyword, Model model) {
+    public String students(@RequestParam(value = "keyword", defaultValue = "") String keyword, Model model,
+                           HttpSession ses) {
+        //Xử lý phân quyền, chặn gõ link trực tiếp, nếu chưa login thì -> login.html
+        User user = (User) ses.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
         List<Student> studentList = new ArrayList<>();
         if(keyword.isBlank()){
-            //Lấy danh sách sinh viên tự db
+            //Lấy danh sách sinh viên từ db
             studentList = studentServ.getAllStudents();
         }
         else {
@@ -49,7 +59,18 @@ public class StudentController {
 
     //Hàm xử lý url: localhost:8080/student/edit/{id}
     @GetMapping("student/edit/{id}")
-    public String editStudent(@PathVariable("id") String id, Model model) {
+    public String editStudent(@PathVariable("id") String id, Model model, HttpSession ses, RedirectAttributes RedAttr) {
+        //Không cho gõ link trực tiếp mà chưa login
+        User user = (User) ses.getAttribute("user");
+        if  (user == null) {
+            return "redirect:/login";
+        }
+        //Login rồi > Kiểm tra thêm role nếu không phải là 1 hoặc 2
+        if (user.getRole() != 1 && user.getRole() != 2){
+            //Báo lỗi access denied
+            RedAttr.addFlashAttribute("errRole", "Access Denied. You are not allowed to perform this action.");
+            return "redirect:/students";
+        }
         //Lấy sinh viên viên từ db có mã là id.
         Student s = studentServ.getStudentById(id);
 
@@ -68,7 +89,17 @@ public class StudentController {
 
     //Hàm xử lí link thêm mới sinh viên
     @GetMapping("/student/add")
-    public String addStudent(Model model) {
+    public String addStudent(Model model, HttpSession ses,  RedirectAttributes RedAttr) {
+        User user = (User) ses.getAttribute("user");
+        if  (user == null) {
+            return "redirect:/login";
+        }
+        //Login rồi > Kiểm tra thêm role nếu không phải là 1
+        if (user.getRole() != 1){
+            //Báo lỗi access denied
+            RedAttr.addFlashAttribute("errRole", "Access Denied. You are not allowed to perform this action.");
+            return "redirect:/students";
+        }
         //Lấy toàn bộ major để gửi qua comboBox(select) của form
         //Note: attributeName phải giống với hàm edit
         List<Major> majorList = majorServ.getAllMajors();
@@ -116,7 +147,17 @@ public class StudentController {
 
     //Hàm xử lý link xóa môt sinh viên /student/delete
     @GetMapping("student/delete/{id}")
-    public String deleteStudent(@PathVariable("id") String id) {
+    public String deleteStudent(@PathVariable("id") String id, HttpSession ses, RedirectAttributes RedAttr) {
+        User user = (User) ses.getAttribute("user");
+        if  (user == null) {
+            return "redirect:/login";
+        }
+        //Login rồi > Kiểm tra thêm role nếu không phải là 1
+        if (user.getRole() != 1){
+            //Báo lỗi access denied
+            RedAttr.addFlashAttribute("errRole", "Access Denied. You are not allowed to perform this action.");
+            return "redirect:/students";
+        }
         //Gọi service hực hiện xóa sinh viên
         studentServ.deleteStudentById(id);
         //Trả về trang student

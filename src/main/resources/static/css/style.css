@@ -108,3 +108,8 @@ th, td {
     margin: 20px auto 0;
 }
 
+.errRole {
+    color: red;
+    font-weight: bold;
+}
+
